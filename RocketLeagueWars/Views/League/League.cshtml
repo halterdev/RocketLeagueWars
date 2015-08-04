@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "ViewLeague";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model RocketLeagueWars.Models.League
+
+<h2>@Model.LeagueName</h2>
+
+<div>
+    <ul style="list-style-type: none">
+        <li id="lileftoright"><a href="@Url.Action("Teams", 
+                     new 
+                         { 
+                           controller = "League", 
+                           id = Model.LeagueID
+                         })">TEAMS</a></li>
+        <li id="lileftoright">STANDINGS</li>
+    </ul>
+</div>

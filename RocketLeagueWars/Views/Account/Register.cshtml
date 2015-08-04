@@ -1,0 +1,49 @@
+﻿@model RocketLeagueWars.Models.RegisterModel
+@{
+    ViewBag.Title = "Register";
+}
+
+<hgroup class="title">
+    @*<h1>@ViewBag.Title.</h1>*@
+    <h2 style="font-family: Arial; color: #3498db;">Create a New Account</h2>
+</hgroup>
+
+@using (Html.BeginForm()) {
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary()
+
+    <fieldset>
+        <legend style="font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; color: coral">Registration Form</legend>
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.UserName)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.UserName)
+                </td>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Password)
+                </td>
+                <td>
+                    @Html.PasswordFor(m => m.Password)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.ConfirmPassword)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.ConfirmPassword)
+                </td>
+            </tr>
+        </table>
+
+        <input type="submit" value="Register" />
+    </fieldset>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

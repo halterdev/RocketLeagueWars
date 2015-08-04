@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketLeagueWars", "RocketLeagueWars\RocketLeagueWars.csproj", "{FC6AD66C-F27B-41CB-9839-09556B46F36D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RocketLeagueWars.Tests", "RocketLeagueWars.Tests\RocketLeagueWars.Tests.csproj", "{8B8ADA83-ED21-4825-BA55-885056983C39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FC6AD66C-F27B-41CB-9839-09556B46F36D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC6AD66C-F27B-41CB-9839-09556B46F36D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC6AD66C-F27B-41CB-9839-09556B46F36D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC6AD66C-F27B-41CB-9839-09556B46F36D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B8ADA83-ED21-4825-BA55-885056983C39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B8ADA83-ED21-4825-BA55-885056983C39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B8ADA83-ED21-4825-BA55-885056983C39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B8ADA83-ED21-4825-BA55-885056983C39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

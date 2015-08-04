@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>Rocket League Wars - @ViewBag.Title</title>
+        <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
+        <meta name="viewport" content="width=device-width" />
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+    </head>
+    <body>
+        <header>
+            <div class="head">
+                <div class="logo">
+                    @Html.ActionLink("ROCKET LEAGUE WARS", "Index", "Home")
+                </div>
+                <div class="float-right">
+                    <section class="login">
+                        @Html.Partial("_LoginPartial")
+                    </section>
+                </div>
+                <div class="menu">
+                    @Html.ActionLink("HOME", "Index", "Home")
+                    @Html.ActionLink("LEAGUES", "Index", "League")
+                    @Html.ActionLink("RULES", "Rules", "Home")
+                    <div class="float-right" style="padding-right: 8%; width: 15%;">
+                        @if (Session["TeamID"] != null && Session["TeamID"] != "0") { 
+                            <a href="@Url.Action("MyTeam", 
+                                     new 
+                                         { 
+                                           controller = "Team", 
+                                           id = Convert.ToInt32(Session["TeamID"])
+                                         })" style="color:red">MY TEAM</a>
+                            @Html.ActionLink("SUBMIT WIN", "Submit", "Game")
+                        }
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div id="body">
+            @RenderSection("featured", required: false)
+            <section class="main">
+                @RenderBody()
+            </section>
+        </div>
+        <footer>
+            @*<div class="content-wrapper">
+                <div class="float-left">
+                    <p>&copy; @DateTime.Now.Year - Rocket League Wars</p>
+                </div>
+            </div>*@
+        </footer>
+
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
+    </body>
+
+    <script>
+        $(document).ready(function () {
+            $('.dropdown').hover(
+                function () {
+                    $(this).children('.sub-menu').slideDown(200);
+                },
+                function () {
+                    $(this).children('.sub-menu').slideUp(200);
+                }
+            );
+        });
+    </script>
+</html>

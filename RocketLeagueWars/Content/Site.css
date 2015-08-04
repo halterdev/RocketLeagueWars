@@ -1,0 +1,81 @@
+﻿html
+{
+    width: 100%;
+    background-color: #ecf0f1;
+}
+
+body
+{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.main
+{
+    width:70%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.head
+{
+    min-height: 80px;
+    
+    border-bottom: ridge;
+    border-bottom-color: black;
+
+    background-color: #34495e;
+    color:white;
+
+    padding-left: 1%;
+    padding-right: 1%;
+}
+     .head a
+     {
+         text-decoration: none;
+         color: white;
+     }
+
+.logo
+{
+    float:left;
+    width: 20%;
+    padding-top: 2%;
+    font-family: Verdana;
+}
+
+.menu 
+{
+    padding-top:3%;
+}
+    .menu a
+    {
+        margin-left: 2%;
+        font-weight: bold;
+    }
+
+.float-right
+{
+    float: right;
+}
+
+.login 
+{
+    font-family: Arial;
+    font-size: small;
+}
+    .login ul
+    {
+        list-style-type: none;
+    }
+    .login li
+    {
+        display: inline;
+    }
+
+#lileftoright
+{
+    display: inline;
+    margin-left: 2%;
+}

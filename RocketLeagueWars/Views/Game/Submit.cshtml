@@ -1,0 +1,77 @@
+﻿@{
+    ViewBag.Title = "Submit";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model RocketLeagueWars.Models.SubmitGameModel
+
+<h2>Submit Game</h2>
+@using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend style="font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; color: coral">Submit Game</legend>
+        <table>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.WinningTeamID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(m => m.WinningTeamID, 
+                        new SelectList(Model.WinningTeamDDL, "Value", "Text"))
+                    @Html.ValidationMessageFor(m => m.WinningTeamID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.LosingTeamID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(m => m.LosingTeamID, 
+                        new SelectList(Model.LosingTeamDDL, "Value", "Text"))
+                    @Html.ValidationMessageFor(m => m.LosingTeamID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.GameTypeID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.DropDownListFor(m => m.GameTypeID, 
+                        new SelectList(Model.GameTypesDDL, "Value", "Text"))
+                    @Html.ValidationMessageFor(m => m.GameTypeID)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.WinningScore)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextBoxFor(m => m.WinningScore)
+                    @Html.ValidationMessageFor(m => m.WinningScore)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.LosingScore)
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.TextBoxFor(m => m.LosingScore)
+                    @Html.ValidationMessageFor(m => m.LosingScore)
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Submit" />
+    </fieldset>
+}
