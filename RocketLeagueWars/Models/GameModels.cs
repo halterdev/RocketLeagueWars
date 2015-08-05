@@ -45,6 +45,7 @@ namespace RocketLeagueWars.Models
         [Display(Name = "Losing Score")]
         public string LosingScore { get; set; }
 
+        // these three lists will represent the dropdowns for submitting a game
         public List<SelectListItem> GameTypesDDL = new List<SelectListItem>()
         {
             new SelectListItem() { Value = "0", Text = "-- Select Game Type --" }, 
@@ -53,7 +54,16 @@ namespace RocketLeagueWars.Models
             new SelectListItem() { Value = "3", Text = "3 vs. 3" }, 
             new SelectListItem() { Value = "4", Text = "4 vs. 4" }, 
         };
-        public List<SelectListItem> WinningTeamDDL = TeamLogic.GetTeamsDDL(true);
-        public List<SelectListItem> LosingTeamDDL = TeamLogic.GetTeamsDDL(false);
+        public List<SelectListItem> WinningTeamDDL;
+        public List<SelectListItem> LosingTeamDDL = TeamLogic.GetLosingTeamsDDL();
+
+        public void SetWinningTeamDDL(int teamID)
+        {
+            // winning team ddl only will have the user's team available and will be disabled 
+            WinningTeamDDL = new List<SelectListItem>()
+            {
+                new SelectListItem() { Value = teamID.ToString(), Text = TeamLogic.GetTeamName(teamID) }
+            };
+        }
     }
 }

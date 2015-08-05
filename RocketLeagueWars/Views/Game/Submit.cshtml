@@ -20,8 +20,8 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DropDownListFor(m => m.WinningTeamID, 
-                        new SelectList(Model.WinningTeamDDL, "Value", "Text"))
+                    @Html.DropDownListFor(m => m.WinningTeamID,
+                        new SelectList(Model.WinningTeamDDL, "Value", "Text"), new { @id = "ddlWinning" })
                     @Html.ValidationMessageFor(m => m.WinningTeamID)
                 </td>
             </tr>
@@ -32,8 +32,8 @@
             </tr>
             <tr>
                 <td>
-                    @Html.DropDownListFor(m => m.LosingTeamID, 
-                        new SelectList(Model.LosingTeamDDL, "Value", "Text"))
+                    @Html.DropDownListFor(m => m.LosingTeamID,
+                        new SelectList(Model.LosingTeamDDL, "Value", "Text"), new { @id = "ddlLosing" })
                     @Html.ValidationMessageFor(m => m.LosingTeamID)
                 </td>
             </tr>
@@ -75,3 +75,13 @@
         <input type="submit" value="Submit" />
     </fieldset>
 }
+    
+<script>
+    $("#ddlLosing > option").each(function () {
+        var winningID = $("#ddlWinning").val();
+        var thisID = $(this).val();
+        if (winningID == thisID) {
+            $(this).remove();
+        }
+    });
+</script>

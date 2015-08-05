@@ -54,5 +54,23 @@ namespace RocketLeagueWars.Logic
 
             return league;
         }
+        public static int GetSeason(int leagueID)
+        {
+            int result = 0;
+            string sql = @"select Season
+                            from Leagues
+                            where LeagueID = @LeagueID";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@LeagueID", leagueID);
+                conn.Open();
+                result = Convert.ToInt32(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return result;
+        }
     }
 }

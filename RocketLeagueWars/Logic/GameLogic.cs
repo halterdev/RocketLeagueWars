@@ -17,6 +17,7 @@ namespace RocketLeagueWars.Logic
 
         public static void Submit(SubmitGameModel game)
         {
+            // submitting a game to the db
             string sql = @"insert into Games (WinningTeamID, LosingTeamID, GameTypeID, WinningScore, LosingScore)
                             values (@WinningTeamID, @LosingTeamID, @GameTypeID, @WinningScore, @LosingScore)";
 

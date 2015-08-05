@@ -77,7 +77,7 @@ namespace RocketLeagueWars.Logic
 
             return result;
         }
-        public static List<SelectListItem> GetTeamsDDL(bool winning)
+        public static List<SelectListItem> GetLosingTeamsDDL()
         {
             DataTable results = new DataTable();
             string sql = @"select TeamID, TeamName
@@ -96,16 +96,68 @@ namespace RocketLeagueWars.Logic
                 teams.Add(new SelectListItem() { Value = teamRow["TeamID"].ToString(), Text = teamRow["TeamName"].ToString() });
             }
 
-            if(winning)
-            {
-                teams.Insert(0, new SelectListItem() { Value = "0", Text = "-- Select Winning Team --" });
-            }
-            else
-            {
-                teams.Insert(0, new SelectListItem() { Value = "0", Text = "-- Select Losing Team --" });
-            }
+            teams.Insert(0, new SelectListItem() { Value = "0", Text = "-- Select Losing Team --" });
 
             return teams;
+        }
+        public static string GetTeamName(int teamID)
+        {
+            string result = String.Empty;
+            string sql = @"select TeamName
+                            from Teams
+                            where TeamID = @TeamID";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@TeamID", teamID);
+                conn.Open();
+                result = Convert.ToString(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return result;
+        }
+        public static int GetLeagueID(int teamID)
+        {
+            int result = 0;
+            string sql = @"select LeagueID
+                            from Teams
+                            where TeamID = @TeamID";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@TeamID", teamID);
+                conn.Open();
+                result = Convert.ToInt32(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return result;
+        }
+
+        public static void UpdateTeamSeasonStatRowsForGame(SubmitGameModel game)
+        {
+            int season = LeagueLogic.GetSeason(GetLeagueID(Convert.ToInt32(game.WinningTeamID)));
+            string sql = @"update TeamSeasonStats 
+                                    set Wins = Wins + 1
+                                    where TeamID = @WinningTeamID and Season = @Season
+
+                          update TeamSeasonStats
+                                    set Losses = Losses + 1
+                                    where TeamID = @LosingTeamID and Season = @Season";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@WinningTeamID", game.WinningTeamID);
+                command.Parameters.AddWithValue("@LosingTeamID", game.LosingTeamID);
+                command.Parameters.AddWithValue("@Season", season);
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
         }
     }
 }

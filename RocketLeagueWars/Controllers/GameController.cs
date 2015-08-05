@@ -17,7 +17,11 @@ namespace RocketLeagueWars.Controllers
         public ActionResult Submit(string returnUrl)
         {
             ViewBag.ReturnUrl = returnUrl;
-            return View(new SubmitGameModel());
+
+            SubmitGameModel model = new SubmitGameModel();
+            model.SetWinningTeamDDL(Convert.ToInt32(Session["TeamID"]));
+
+            return View(model);
         }
 
         [HttpPost]
@@ -27,8 +31,13 @@ namespace RocketLeagueWars.Controllers
         {
             if (ModelState.IsValid)
             {
+                // submit game .. then go to standings page  ?
                 GameLogic.Submit(model);
-                return View(new SubmitGameModel());
+                TeamLogic.UpdateTeamSeasonStatRowsForGame(model);
+
+                SubmitGameModel newModel = new SubmitGameModel();
+                newModel.SetWinningTeamDDL(Convert.ToInt32(Session["TeamID"]));
+                return View(newModel);
             }
 
             return View(model);
