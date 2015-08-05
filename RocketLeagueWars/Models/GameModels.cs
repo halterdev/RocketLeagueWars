@@ -73,4 +73,18 @@ namespace RocketLeagueWars.Models
             WinningPlayersList = TeamLogic.GetPlayersOnTeam(teamID);
         }
     }
+
+    public class ScheduledGames
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int ScheduleGameID { get; set; }
+        [ForeignKey("Team")]
+        public int AwayTeamID { get; set; }
+        [ForeignKey("Team")]
+        public int HomeTeamID { get; set; }
+        public int GameTypeID { get; set; }
+        public bool IsPlayed { get; set; }
+        public int Season { get; set; }
+    }
 }
