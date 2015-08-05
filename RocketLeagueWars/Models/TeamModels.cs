@@ -22,4 +22,11 @@ namespace RocketLeagueWars.Models
         public DbSet<Team> Teams { get; set; }
     }
 
+    public class UserOnTeam
+    {
+        public int UserID { get; set; }
+        public string Username { get; set; }
+        public int TeamID { get; set; }
+    }
+
 }

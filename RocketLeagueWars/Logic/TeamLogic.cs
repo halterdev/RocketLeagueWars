@@ -136,6 +136,31 @@ namespace RocketLeagueWars.Logic
 
             return result;
         }
+        public static List<UserOnTeam> GetPlayersOnTeam(int teamID)
+        {
+            DataTable results = new DataTable();
+            List<UserOnTeam> users = new List<UserOnTeam>();
+
+            string sql = @"select UserID, Username
+                            from Users
+                            where TeamID = @TeamID
+                            order by Username desc";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@TeamID", teamID);
+                new SqlDataAdapter(command).Fill(results);   
+            }
+
+            foreach (DataRow userRow in results.Rows)
+            {
+                users.Add(new UserOnTeam() { UserID = Convert.ToInt32(userRow["UserID"]), Username = userRow["Username"].ToString(),
+                    TeamID = teamID });
+            }
+
+            return users;
+        }
 
         public static void UpdateTeamSeasonStatRowsForGame(SubmitGameModel game)
         {

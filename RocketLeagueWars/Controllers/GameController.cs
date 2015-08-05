@@ -20,7 +20,7 @@ namespace RocketLeagueWars.Controllers
 
             SubmitGameModel model = new SubmitGameModel();
             model.SetWinningTeamDDL(Convert.ToInt32(Session["TeamID"]));
-
+            model.SetWinningPlayersList(Convert.ToInt32(Session["TeamID"]));
             return View(model);
         }
 
@@ -37,6 +37,7 @@ namespace RocketLeagueWars.Controllers
 
                 SubmitGameModel newModel = new SubmitGameModel();
                 newModel.SetWinningTeamDDL(Convert.ToInt32(Session["TeamID"]));
+                newModel.SetWinningPlayersList(Convert.ToInt32(Session["TeamID"]));
                 return View(newModel);
             }
 

@@ -57,6 +57,9 @@ namespace RocketLeagueWars.Models
         public List<SelectListItem> WinningTeamDDL;
         public List<SelectListItem> LosingTeamDDL = TeamLogic.GetLosingTeamsDDL();
 
+        // list of players
+        public List<UserOnTeam> WinningPlayersList;
+
         public void SetWinningTeamDDL(int teamID)
         {
             // winning team ddl only will have the user's team available and will be disabled 
@@ -64,6 +67,10 @@ namespace RocketLeagueWars.Models
             {
                 new SelectListItem() { Value = teamID.ToString(), Text = TeamLogic.GetTeamName(teamID) }
             };
+        }
+        public void SetWinningPlayersList(int teamID)
+        {
+            WinningPlayersList = TeamLogic.GetPlayersOnTeam(teamID);
         }
     }
 }
