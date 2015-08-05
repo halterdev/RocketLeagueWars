@@ -161,6 +161,40 @@ namespace RocketLeagueWars.Logic
 
             return users;
         }
+        public static IEnumerable<TeamSeasonStats> GetTeamSeasonStatsForCurrentSeason(int leagueID)
+        {
+            DataTable teamSeasonStatsResults = new DataTable();
+            string sql = @"select tss.TeamSeasonStatID, tss.TeamID, tss.Wins, tss.Losses, tss.Season, t.TeamName
+                            from TeamSeasonStats tss
+                            join Teams t on t.TeamID = tss.TeamID
+                            where t.LeagueID = @LeagueID 
+                                and tss.Season = (select Season from Leagues where LeagueID = @LeagueID)
+                            order by tss.Wins desc";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@LeagueID", leagueID);
+                new SqlDataAdapter(command).Fill(teamSeasonStatsResults);
+            }
+
+            List<TeamSeasonStats> teamSeasonStats = new List<TeamSeasonStats>();
+            foreach (DataRow teamSeasonStatsRow in teamSeasonStatsResults.Rows)
+            {
+                TeamSeasonStats teamSeasonStat = new TeamSeasonStats()
+                {
+                    TeamSeasonStatID = Convert.ToInt32(teamSeasonStatsRow["TeamSeasonStatID"]),
+                    TeamID = Convert.ToInt32(teamSeasonStatsRow["TeamID"]),
+                    Wins = Convert.ToInt32(teamSeasonStatsRow["Wins"]), 
+                    Losses = Convert.ToInt32(teamSeasonStatsRow["Losses"]), 
+                    Season = Convert.ToInt32(teamSeasonStatsRow["Season"]),
+                    TeamName = teamSeasonStatsRow["TeamName"].ToString()
+                };
+                teamSeasonStats.Add(teamSeasonStat);
+            }
+
+            return teamSeasonStats;
+        }
 
         public static void UpdateTeamSeasonStatRowsForGame(SubmitGameModel game)
         {

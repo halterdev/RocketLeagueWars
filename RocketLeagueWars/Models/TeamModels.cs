@@ -29,4 +29,17 @@ namespace RocketLeagueWars.Models
         public int TeamID { get; set; }
     }
 
+    [Table("TeamSeasonStats")]
+    public class TeamSeasonStats
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int TeamSeasonStatID { get; set; }
+        public int TeamID { get; set; }
+        public int Wins { get; set; }
+        public int Losses { get; set; }
+        public int Season { get; set; }
+        public string TeamName { get; set; }
+    }
+
 }

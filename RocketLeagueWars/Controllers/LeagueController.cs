@@ -30,5 +30,11 @@ namespace RocketLeagueWars.Controllers
             IEnumerable<Team> teams = TeamLogic.GetTeams(id);
             return View(teams);
         }
+
+        public ActionResult Standings(int id)
+        {
+            IEnumerable<TeamSeasonStats> teamStats = TeamLogic.GetTeamSeasonStatsForCurrentSeason(id);
+            return View(teamStats);
+        }
     }
 }

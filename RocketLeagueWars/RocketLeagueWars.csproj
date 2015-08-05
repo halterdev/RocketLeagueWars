@@ -320,6 +320,7 @@
     <Content Include="Views\Home\Rules.cshtml" />
     <Content Include="Views\Team\MyTeam.cshtml" />
     <Content Include="Views\Game\Submit.cshtml" />
+    <Content Include="Views\League\Standings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
