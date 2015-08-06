@@ -25,6 +25,7 @@
                     @Html.ActionLink("HOME", "Index", "Home")
                     @Html.ActionLink("LEAGUES", "Index", "League")
                     @Html.ActionLink("RULES", "Rules", "Home")
+                    <a href="~/forum">FORUM</a>
                     <div class="float-right" style="padding-right: 8%; width: 15%;">
                         @if (Session["TeamID"] != null && Session["TeamID"] != "0") { 
                             <a href="@Url.Action("MyTeam", 
