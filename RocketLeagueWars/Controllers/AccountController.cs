@@ -15,7 +15,6 @@ using RocketLeagueWars.Logic;
 namespace RocketLeagueWars.Controllers
 {
     [Authorize]
-    [InitializeSimpleMembership]
     public class AccountController : Controller
     {
         //
