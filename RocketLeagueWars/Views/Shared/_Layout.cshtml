@@ -5,9 +5,10 @@
         <title>Rocket League Wars - @ViewBag.Title</title>
         <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
         <meta name="viewport" content="width=device-width" />
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
         @Styles.Render("~/Content/css")
         @Scripts.Render("~/bundles/modernizr")
+        @Scripts.Render("~/bundles/jquery")
+        @RenderSection("scripts", required: false)
     </head>
     <body>
         <header>
@@ -51,21 +52,5 @@
                 </div>
             </div>*@
         </footer>
-
-        @Scripts.Render("~/bundles/jquery")
-        @RenderSection("scripts", required: false)
     </body>
-
-    <script>
-        $(document).ready(function () {
-            $('.dropdown').hover(
-                function () {
-                    $(this).children('.sub-menu').slideDown(200);
-                },
-                function () {
-                    $(this).children('.sub-menu').slideUp(200);
-                }
-            );
-        });
-    </script>
 </html>
