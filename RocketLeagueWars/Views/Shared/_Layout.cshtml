@@ -26,17 +26,15 @@
                     @Html.ActionLink("LEAGUES", "Index", "League")
                     @Html.ActionLink("RULES", "Rules", "Home")
                     <a href="~/forum">FORUM</a>
-                    <div class="float-right" style="padding-right: 8%; width: 15%;">
-                        @if (Session["TeamID"] != null && Session["TeamID"] != "0") { 
+                    @if (Session["TeamID"] != null && Session["TeamID"] != "0") { 
                             <a href="@Url.Action("MyTeam", 
                                      new 
                                          { 
                                            controller = "Team", 
                                            id = Convert.ToInt32(Session["TeamID"])
-                                         })" style="color:red">MY TEAM</a>
-                            @Html.ActionLink("SUBMIT WIN", "Submit", "Game")
-                        }
-                    </div>
+                                         })" id="myteambtn">MY TEAM</a>
+                            @Html.ActionLink("SUBMIT WIN", "Submit", "Game", null, new { id = "submitgamebtn" } )
+                    }
                 </div>
             </div>
         </header>

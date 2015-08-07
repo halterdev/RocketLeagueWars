@@ -86,3 +86,13 @@ body
     margin-left: auto;
     margin-right: auto;
 }
+
+#myteambtn
+{
+    margin-left: 20%;
+    color: red;
+}
+#submitgamebtn
+{
+    color: red;
+}
