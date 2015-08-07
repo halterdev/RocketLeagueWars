@@ -196,6 +196,7 @@
     <Compile Include="Logic\Main.cs" />
     <Compile Include="Logic\TeamLogic.cs" />
     <Compile Include="Models\AccountModels.cs" />
+    <Compile Include="Models\CheckLosingScore.cs" />
     <Compile Include="Models\GameModels.cs" />
     <Compile Include="Models\LeagueModels.cs" />
     <Compile Include="Models\TeamModels.cs" />

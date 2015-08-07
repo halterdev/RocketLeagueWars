@@ -62,6 +62,8 @@ namespace RocketLeagueWars.Controllers
                 return View(newModel);
             }
 
+            model.SetWinningTeamDDL(Convert.ToInt32(Session["TeamID"]));
+            model.SetWinningPlayersList(Convert.ToInt32(Session["TeamID"]));
             return View(model);
         }
     }

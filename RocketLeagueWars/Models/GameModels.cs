@@ -38,10 +38,12 @@ namespace RocketLeagueWars.Models
         public string GameTypeID { get; set; }
 
         [Required]
+        [CheckScore]
         [Display(Name = "Winning Score")]
         public string WinningScore { get; set; }
 
         [Required]
+        [CheckScore]
         [Display(Name = "Losing Score")]
         public string LosingScore { get; set; }
 
@@ -71,6 +73,26 @@ namespace RocketLeagueWars.Models
         public void SetWinningPlayersList(int teamID)
         {
             WinningPlayersList = TeamLogic.GetPlayersOnTeam(teamID);
+        }
+    }
+
+    public class CheckScore : ValidationAttribute
+    {
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            try
+            {
+                int score = Convert.ToInt32(value);
+                if (score > 2)
+                {
+                    return new ValidationResult("Score must be less than 3");
+                }
+            }
+            catch
+            {
+                return new ValidationResult("Scores must be numeric");
+            }
+            return ValidationResult.Success;
         }
     }
 
