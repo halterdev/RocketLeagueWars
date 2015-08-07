@@ -29,6 +29,45 @@ namespace RocketLeagueWars.Logic
 
             return result;
         }
+        public static void UpdatePlayerSeasonStats(PlayerSeasonStat stats, SubmitGameModel game)
+        {
+            int teamID = GetTeamID(stats.UserID);
+            string sql = @"declare @Count int
+                            set @Count = (select count(pss.PlayerSeasonStatID)
+                                            from PlayerSeasonStats pss
+                                            where UserID = @UserID
+                                                and Season = @Season)
+                           if @Count = 0
+                           begin 
+                               insert into PlayerSeasonStats (UserID, Wins, Losses, Season)
+                                values (@UserID, 
+                                        case @Win when 1 then 1 else 0 end, 
+                                        case @Win when 1 then 0 else 1 end,
+                                        @Season)
+                           end 
+                           else 
+                               if @Win = 1
+                               begin
+                                    update PlayerSeasonStats 
+                                    set Wins = Wins + 1
+                                    where UserID = @UserID and Season = @Season
+                               end
+                               else 
+                                    update PlayerSeasonStats
+                                    set Losses = Losses + 1
+                                    where UserID = @UserID and Season = @Season";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@UserID", stats.UserID);
+                command.Parameters.AddWithValue("@Season", stats.Season);
+                command.Parameters.AddWithValue("@Win", teamID == Convert.ToInt32(game.WinningTeamID));
+                conn.Open();
+                command.ExecuteNonQuery();
+                conn.Close();
+            }
+        }
 
         public static int Login(LoginModel user)
         {

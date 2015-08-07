@@ -12,84 +12,100 @@
 
     <fieldset>
         <legend style="font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; color: coral">Submit Game</legend>
-        <table>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.WinningTeamID)
-                </td>
-                <td style="font-size: small; font-weight: bold">
-                    <table>
+        <div style="float:right; margin-right: 30%; font-weight: bold; font-size:small">
+                <table>
                         <tr>
                             <td>
-                                Winning Player(s):
+                                <table>
+                                    <tr>
+                                        <td>
+                                            Winning Player(s):
+                                        </td>
+                                    </tr>
+                                    @for (int i = 0; i < Model.WinningPlayersList.Count; i++)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @Model.WinningPlayersList[i].Username <input type="checkbox" name="winningplayer" value="@Model.WinningPlayersList[i].UserID" />
+                                            </td>
+                                        </tr>
+                                    }
+                                </table>
+                            </td>
+                            <td>
+                                <table id="losingplayers">
+                                
+                                </table>
                             </td>
                         </tr>
-                        @for (int i = 0; i < Model.WinningPlayersList.Count; i++)
-                        {
-                            <tr>
-                                <td>
-                                    @Model.WinningPlayersList[i].Username <input type="checkbox" />
-                                </td>
-                            </tr>
-                        }
                     </table>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DropDownListFor(m => m.WinningTeamID,
-                        new SelectList(Model.WinningTeamDDL, "Value", "Text"), new { @id = "ddlWinning" })
-                    @Html.ValidationMessageFor(m => m.WinningTeamID)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.LosingTeamID)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DropDownListFor(m => m.LosingTeamID,
-                        new SelectList(Model.LosingTeamDDL, "Value", "Text"), new { @id = "ddlLosing" })
-                    @Html.ValidationMessageFor(m => m.LosingTeamID)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.GameTypeID)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.DropDownListFor(m => m.GameTypeID, 
-                        new SelectList(Model.GameTypesDDL, "Value", "Text"))
-                    @Html.ValidationMessageFor(m => m.GameTypeID)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.WinningScore)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.TextBoxFor(m => m.WinningScore)
-                    @Html.ValidationMessageFor(m => m.WinningScore)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.LabelFor(m => m.LosingScore)
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    @Html.TextBoxFor(m => m.LosingScore)
-                    @Html.ValidationMessageFor(m => m.LosingScore)
-                </td>
-            </tr>
-        </table>
-        <input type="submit" value="Submit" />
+            </div>
+        <div>
+            <div style="width:40%">
+                <table>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.WinningTeamID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DropDownListFor(m => m.WinningTeamID,
+                                new SelectList(Model.WinningTeamDDL, "Value", "Text"), new { @id = "ddlWinning" })
+                            @Html.ValidationMessageFor(m => m.WinningTeamID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.LosingTeamID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DropDownListFor(m => m.LosingTeamID,
+                                new SelectList(Model.LosingTeamDDL, "Value", "Text"), new { @id = "ddlLosing" })
+                            @Html.ValidationMessageFor(m => m.LosingTeamID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.GameTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.DropDownListFor(m => m.GameTypeID, 
+                                new SelectList(Model.GameTypesDDL, "Value", "Text"))
+                            @Html.ValidationMessageFor(m => m.GameTypeID)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.WinningScore)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(m => m.WinningScore)
+                            @Html.ValidationMessageFor(m => m.WinningScore)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.LabelFor(m => m.LosingScore)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @Html.TextBoxFor(m => m.LosingScore)
+                            @Html.ValidationMessageFor(m => m.LosingScore)
+                        </td>
+                    </tr>
+                </table>
+                <input type="submit" value="Submit" />
+            </div>
+            
+        </div>
     </fieldset>
 }
     
@@ -100,5 +116,25 @@
         if (winningID == thisID) {
             $(this).remove();
         }
+    });
+
+    $("#ddlLosing").change(function () {
+        $("#losingplayers").empty();
+
+        $.ajax({
+            url: '../Team/GetPlayers',
+            type: 'POST',
+            datatype: 'json',
+            data: { id : $("#ddlLosing").val() },
+            success: function (data) {
+                $('#losingplayers').append('<tr><td>Losing Player(s):</td></tr>');
+                $.each(data, function (i, item) {
+                    $('#losingplayers').append('<tr><td>' + item.Username + '<input type="checkbox" name="losingplayer" value="' + item.UserID + '" /></td></tr>');
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert(errorThrown);
+            }
+        });
     });
 </script>

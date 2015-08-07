@@ -42,4 +42,10 @@ namespace RocketLeagueWars.Models
         public string TeamName { get; set; }
     }
 
+    public class Player
+    {
+        public int UserID { get; set; }
+        public string Username { get; set; }
+    }
+
 }

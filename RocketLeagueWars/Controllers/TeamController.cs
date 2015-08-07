@@ -41,5 +41,11 @@ namespace RocketLeagueWars.Controllers
 
             return View();
         }
+
+        public JsonResult GetPlayers(int id)
+        {
+            List<UserOnTeam> players = TeamLogic.GetPlayersOnTeam(id);
+            return Json(players, JsonRequestBehavior.AllowGet);
+        }
     }
 }

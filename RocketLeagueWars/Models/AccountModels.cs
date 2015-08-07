@@ -96,4 +96,16 @@ namespace RocketLeagueWars.Models
         public string ProviderDisplayName { get; set; }
         public string ProviderUserId { get; set; }
     }
+
+    [Table("PlayerSeasonStats")]
+    public class PlayerSeasonStat
+    {
+        [Key]
+        [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
+        public int PlayerSeasonStatID { get; set; }
+        public int UserID { get; set; }
+        public int Wins { get; set; }
+        public int Losses { get; set; }
+        public int Season { get; set; }
+    }
 }
