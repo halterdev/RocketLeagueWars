@@ -9,7 +9,7 @@
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset style="margin-left: auto; margin-right: auto; width: 60%;">
+    <fieldset style="margin-left: auto; margin-right: auto; width: 60%; margin-top: 5%;">
         <legend class="legend">Submit Game</legend>
         <div style="float:right; margin-right: 30%; font-weight: bold; font-size:small">
                 <table>
@@ -41,7 +41,7 @@
                     </table>
             </div>
         <div>
-            <div style="width:40%">
+            <div style="width:40%" class="submit">
                 <table>
                     <tr>
                         <td>
@@ -102,7 +102,7 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" id="btnSubmit" value="Submit" />
+                <input type="submit" id="btnSubmit" class="btnSubmit" value="Submit" />
             </div>
             
         </div>
@@ -113,7 +113,7 @@
     $(document).ready(function () {
         $("#ddlWinning").prop("disabled", true);
         $("#btnSubmit").prop("disabled", true);
-        $("#btnSubmit").prop("title", "Select Players");
+        $("#btnSubmit").prop("title", "Must Select Players");
     });
 
     $("#ddlLosing > option").each(function () {
@@ -160,13 +160,15 @@
             }
         });
 
-        if (winningPlayers == playersNeeded && losingPlayers == playersNeeded) {
+        if (winningPlayers == playersNeeded && losingPlayers == playersNeeded && playersNeeded > 0) {
             $("#btnSubmit").prop("disabled", false);
             $("#btnSubmit").prop("title", "");
+            $("#btnSubmit").css("background-color", "#2ecc71");
         }
         else {
             $("#btnSubmit").prop("disabled", true);
-            $("#btnSubmit").prop("title", "Select Players");
+            $("#btnSubmit").prop("title", "Must Select Players");
+            $("#btnSubmit").css("background-color", "#e74c3c");
         }
     }
 

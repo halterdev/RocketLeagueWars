@@ -99,10 +99,21 @@ body
 .legend
 {
     font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; 
-    color: coral
+    color: coral;
+    font-size: x-large;
 }
 
 .submit
 {
-    
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.btnSubmit
+{
+    margin-top: 2%;
+    height: 40px;
+    width: 45%;
+    background-color:#e74c3c; 
+    border: none;
+    color: white;
 }
