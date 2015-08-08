@@ -4,14 +4,13 @@
 }
 @model RocketLeagueWars.Models.SubmitGameModel
 
-<h2>Submit Game</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl }))
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend style="font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; color: coral">Submit Game</legend>
+    <fieldset style="margin-left: auto; margin-right: auto; width: 60%;">
+        <legend class="legend">Submit Game</legend>
         <div style="float:right; margin-right: 30%; font-weight: bold; font-size:small">
                 <table>
                         <tr>
@@ -26,7 +25,8 @@
                                     {
                                         <tr>
                                             <td>
-                                                @Model.WinningPlayersList[i].Username <input type="checkbox" name="winningplayer" value="@Model.WinningPlayersList[i].UserID" />
+                                                @Model.WinningPlayersList[i].Username 
+                                                <input type="checkbox" name="winningplayer" class="winner" value="@Model.WinningPlayersList[i].UserID" onchange="playerChange()" />
                                             </td>
                                         </tr>
                                     }
@@ -74,8 +74,8 @@
                     </tr>
                     <tr>
                         <td>
-                            @Html.DropDownListFor(m => m.GameTypeID, 
-                                new SelectList(Model.GameTypesDDL, "Value", "Text"))
+                            @Html.DropDownListFor(m => m.GameTypeID,
+                                new SelectList(Model.GameTypesDDL, "Value", "Text"), new { @id = "ddlGameType", @onchange="gameTypeChange()" })
                             @Html.ValidationMessageFor(m => m.GameTypeID)
                         </td>
                     </tr>
@@ -102,7 +102,7 @@
                         </td>
                     </tr>
                 </table>
-                <input type="submit" value="Submit" />
+                <input type="submit" id="btnSubmit" value="Submit" />
             </div>
             
         </div>
@@ -110,6 +110,12 @@
 }
     
 <script>
+    $(document).ready(function () {
+        $("#ddlWinning").prop("disabled", true);
+        $("#btnSubmit").prop("disabled", true);
+        $("#btnSubmit").prop("title", "Select Players");
+    });
+
     $("#ddlLosing > option").each(function () {
         var winningID = $("#ddlWinning").val();
         var thisID = $(this).val();
@@ -129,7 +135,7 @@
             success: function (data) {
                 $('#losingplayers').append('<tr><td>Losing Player(s):</td></tr>');
                 $.each(data, function (i, item) {
-                    $('#losingplayers').append('<tr><td>' + item.Username + '<input type="checkbox" name="losingplayer" value="' + item.UserID + '" /></td></tr>');
+                    $('#losingplayers').append('<tr><td>' + item.Username + '<input type="checkbox" name="losingplayer" class="loser" onchange="playerChange()" value="' + item.UserID + '" /></td></tr>');
                 });
             },
             error: function (jqXHR, textStatus, errorThrown) {
@@ -137,4 +143,39 @@
             }
         });
     });
+
+    function playerChange() {
+        var playersNeeded = $("#ddlGameType").val();
+        
+        var winningPlayers = 0;
+        var losingPlayers = 0;
+        $(".winner").each(function () {
+            if ($(this).is(':checked')) {
+                winningPlayers++;
+            }
+        });
+        $(".loser").each(function () {
+            if ($(this).is(':checked')) {
+                losingPlayers++;
+            }
+        });
+
+        if (winningPlayers == playersNeeded && losingPlayers == playersNeeded) {
+            $("#btnSubmit").prop("disabled", false);
+            $("#btnSubmit").prop("title", "");
+        }
+        else {
+            $("#btnSubmit").prop("disabled", true);
+            $("#btnSubmit").prop("title", "Select Players");
+        }
+    }
+
+    function gameTypeChange() {
+        $(".winner").each(function () {
+            $(this).prop("checked", false);
+        });
+        $(".loser").each(function () {
+            $(this).prop("checked", false);
+        });
+    }
 </script>
