@@ -15,6 +15,24 @@ namespace RocketLeagueWars.Logic
         public static int ThreeVsThree = 3; 
         public static int FourVsFour = 4;
 
+        public static int GetPointsForGameType(int gameTypeID)
+        {
+            int results = 0;
+            string sql = @"select Points
+                            from GameTypes
+                            where GameTypeID = @GameTypeID";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@GameTypeID", gameTypeID);
+                conn.Open();
+                results = Convert.ToInt32(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return results;
+        }
         public static void Submit(SubmitGameModel game)
         {
             // submitting a game to the db

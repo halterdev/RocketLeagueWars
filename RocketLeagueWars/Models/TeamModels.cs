@@ -39,6 +39,7 @@ namespace RocketLeagueWars.Models
         public int Wins { get; set; }
         public int Losses { get; set; }
         public int Season { get; set; }
+        public int Points { get; set; }
         public string TeamName { get; set; }
     }
 

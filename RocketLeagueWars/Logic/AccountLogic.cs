@@ -32,6 +32,7 @@ namespace RocketLeagueWars.Logic
         public static void UpdatePlayerSeasonStats(PlayerSeasonStat stats, SubmitGameModel game)
         {
             int teamID = GetTeamID(stats.UserID);
+            int points = GameLogic.GetPointsForGameType(Convert.ToInt32(game.GameTypeID));
             string sql = @"declare @Count int
                             set @Count = (select count(pss.PlayerSeasonStatID)
                                             from PlayerSeasonStats pss
@@ -39,17 +40,17 @@ namespace RocketLeagueWars.Logic
                                                 and Season = @Season)
                            if @Count = 0
                            begin 
-                               insert into PlayerSeasonStats (UserID, Wins, Losses, Season)
+                               insert into PlayerSeasonStats (UserID, Wins, Losses, Season, Points)
                                 values (@UserID, 
                                         case @Win when 1 then 1 else 0 end, 
                                         case @Win when 1 then 0 else 1 end,
-                                        @Season)
+                                        @Season, @Points)
                            end 
                            else 
                                if @Win = 1
                                begin
                                     update PlayerSeasonStats 
-                                    set Wins = Wins + 1
+                                    set Wins = Wins + 1, Points = Points + @Points
                                     where UserID = @UserID and Season = @Season
                                end
                                else 
@@ -62,6 +63,7 @@ namespace RocketLeagueWars.Logic
                 SqlCommand command = new SqlCommand(sql, conn);
                 command.Parameters.AddWithValue("@UserID", stats.UserID);
                 command.Parameters.AddWithValue("@Season", stats.Season);
+                command.Parameters.AddWithValue("@Points", points);
                 command.Parameters.AddWithValue("@Win", teamID == Convert.ToInt32(game.WinningTeamID));
                 conn.Open();
                 command.ExecuteNonQuery();

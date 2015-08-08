@@ -199,8 +199,10 @@ namespace RocketLeagueWars.Logic
         public static void UpdateTeamSeasonStatRowsForGame(SubmitGameModel game)
         {
             int season = LeagueLogic.GetSeason(GetLeagueID(Convert.ToInt32(game.WinningTeamID)));
+            int points = GameLogic.GetPointsForGameType(Convert.ToInt32(game.GameTypeID));
+            
             string sql = @"update TeamSeasonStats 
-                                    set Wins = Wins + 1
+                                    set Wins = Wins + 1, Points = Points + @Points
                                     where TeamID = @WinningTeamID and Season = @Season
 
                           update TeamSeasonStats
@@ -212,6 +214,7 @@ namespace RocketLeagueWars.Logic
                 SqlCommand command = new SqlCommand(sql, conn);
                 command.Parameters.AddWithValue("@WinningTeamID", game.WinningTeamID);
                 command.Parameters.AddWithValue("@LosingTeamID", game.LosingTeamID);
+                command.Parameters.AddWithValue("@Points", points);
                 command.Parameters.AddWithValue("@Season", season);
                 conn.Open();
                 command.ExecuteNonQuery();
