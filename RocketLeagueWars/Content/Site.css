@@ -117,3 +117,25 @@ body
     border: none;
     color: white;
 }
+
+.table
+{
+    margin-left: auto; 
+    margin-right: auto;
+    margin-top: 5%; 
+}
+
+.lgmenu
+{
+    border: ridge;
+    font-family: 'Courier New';
+    color:black;
+}
+    .lgmenu a
+    {
+        text-decoration: none;
+    }
+    .lgmenu a:hover
+    {
+        color: green;
+    }

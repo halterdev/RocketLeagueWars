@@ -4,11 +4,14 @@
 }
 @model IEnumerable<RocketLeagueWars.Models.TeamSeasonStats>
 
-<h2>Standings</h2>
-<table style="margin-left: auto; margin-right: auto; margin-top: 5%;">
+@Html.Partial("_LeagueMenuPartial", Model.Last())
+<table class="table">
     <tr>
         <th>
             Team
+        </th>
+        <th>
+            Points
         </th>
         <th>
             Wins
@@ -21,7 +24,15 @@
     {
         <tr>
             <td>
-                @item.TeamName
+                <a href="@Url.Action("Index", 
+                     new 
+                         { 
+                           controller = "Team", 
+                           id = item.TeamID
+                         })">@item.TeamName</a>
+            </td>
+            <td style="text-align: right">
+                @item.Points
             </td>
             <td style="text-align: right">
                 @item.Wins

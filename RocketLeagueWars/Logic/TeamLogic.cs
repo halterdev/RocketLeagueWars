@@ -164,12 +164,13 @@ namespace RocketLeagueWars.Logic
         public static IEnumerable<TeamSeasonStats> GetTeamSeasonStatsForCurrentSeason(int leagueID)
         {
             DataTable teamSeasonStatsResults = new DataTable();
-            string sql = @"select tss.TeamSeasonStatID, tss.TeamID, tss.Wins, tss.Losses, tss.Season, t.TeamName
+            string sql = @"select tss.TeamSeasonStatID, tss.TeamID, tss.Wins, tss.Losses, tss.Season, t.TeamName, 
+                                    isnull(tss.Points, 0) as Points, t.LeagueID
                             from TeamSeasonStats tss
                             join Teams t on t.TeamID = tss.TeamID
                             where t.LeagueID = @LeagueID 
                                 and tss.Season = (select Season from Leagues where LeagueID = @LeagueID)
-                            order by tss.Wins desc";
+                            order by tss.Points desc";
 
             using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
             {
@@ -188,6 +189,8 @@ namespace RocketLeagueWars.Logic
                     Wins = Convert.ToInt32(teamSeasonStatsRow["Wins"]), 
                     Losses = Convert.ToInt32(teamSeasonStatsRow["Losses"]), 
                     Season = Convert.ToInt32(teamSeasonStatsRow["Season"]),
+                    Points = Convert.ToInt32(teamSeasonStatsRow["Points"]),
+                    LeagueID = leagueID,
                     TeamName = teamSeasonStatsRow["TeamName"].ToString()
                 };
                 teamSeasonStats.Add(teamSeasonStat);
