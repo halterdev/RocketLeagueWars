@@ -1,0 +1,20 @@
+﻿@{
+    ViewBag.Title = "_LeagueMenuPartial";
+}
+
+<div class="lgmenu">
+    <ul style="list-style-type: none">
+        <li id="lileftoright"><a href="@Url.Action("Standings", 
+                     new 
+                         { 
+                           controller = "League", 
+                           id = Model.LeagueID
+                         })">STANDINGS</a></li>
+        <li id="lileftoright"><a href="@Url.Action("Schedule", 
+                     new 
+                         { 
+                           controller = "League", 
+                           id = Model.LeagueID
+                         })">SCHEDULE</a></li>
+    </ul>
+</div>
