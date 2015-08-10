@@ -147,3 +147,15 @@ body
     width: 60%; 
     margin-top: 5%;
 }
+
+.rulesrow
+{
+    border-top-style: solid;
+}
+
+.rulesrowheader
+{
+    width: 20%; 
+    margin-left: auto; 
+    margin-right: auto
+}
