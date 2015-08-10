@@ -22,6 +22,15 @@
                 <td>
                     @Html.TextBoxFor(m => m.UserName)
                 </td>
+            </tr>
+            <tr>
+                <td>
+                    @Html.LabelFor(m => m.Email)
+                </td>
+                <td>
+                    @Html.TextBoxFor(m => m.Email)
+                </td>
+            </tr>
             <tr>
                 <td>
                     @Html.LabelFor(m => m.Password)
@@ -35,7 +44,7 @@
                     @Html.LabelFor(m => m.ConfirmPassword)
                 </td>
                 <td>
-                    @Html.TextBoxFor(m => m.ConfirmPassword)
+                    @Html.EditorFor(m => m.ConfirmPassword)
                 </td>
             </tr>
         </table>

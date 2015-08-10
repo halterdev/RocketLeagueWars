@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Globalization;
 using System.Web.Security;
+using RocketLeagueWars.Logic;
 
 namespace RocketLeagueWars.Models
 {
@@ -67,16 +68,20 @@ namespace RocketLeagueWars.Models
         [DataType(DataType.Password)]
         [Display(Name = "Password")]
         public string Password { get; set; }
-
-        [Display(Name = "Remember Me?")]
-        public bool RememberMe { get; set; }
     }
 
     public class RegisterModel
     {
         [Required]
+        [DoesValueAlreadyExist(true, ErrorMessage = "Username already exists")]
         [Display(Name = "User Name")]
         public string UserName { get; set; }
+
+        [Required]
+        [DataType(DataType.EmailAddress)]
+        [DoesValueAlreadyExist(false, ErrorMessage = "Email already exists")]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         [Required]
         [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
@@ -108,5 +113,35 @@ namespace RocketLeagueWars.Models
         public int Losses { get; set; }
         public int Season { get; set; }
         public int Points { get; set; }
+    }
+
+    public class DoesValueAlreadyExist : ValidationAttribute
+    {
+        public string Value { get; set; }
+        public bool IsUsername { get; set; }
+
+        public DoesValueAlreadyExist(bool isUsername)
+        {
+            this.IsUsername = isUsername;
+        }
+
+        protected override ValidationResult IsValid(object value, ValidationContext validationContext)
+        {
+            if (IsUsername)
+            {
+                if (AccountLogic.DoesUsernameExist(value.ToString()))
+                {
+                    return new ValidationResult(this.FormatErrorMessage(validationContext.DisplayName));
+                }
+            }
+            else
+            {
+                if (AccountLogic.DoesEmailExist(value.ToString()))
+                {
+                    return new ValidationResult(this.FormatErrorMessage(validationContext.DisplayName));
+                }
+            }
+            return null;
+        }
     }
 }

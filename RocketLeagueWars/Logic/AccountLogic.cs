@@ -10,13 +10,14 @@ namespace RocketLeagueWars.Logic
         public static int Register(RegisterModel user)
         {
             int result = 0;
-            string sql = @"insert into Users (Username, Password) values (@Username, @Password)
+            string sql = @"insert into Users (Username, Email, Password) values (@Username, @Email, @Password)
                             select scope_identity()";
 
             using (SqlConnection conn = new SqlConnection(ConfigurationManager.ConnectionStrings["DSN"].ConnectionString))
             {
                 SqlCommand command = new SqlCommand(sql, conn);
                 command.Parameters.AddWithValue("@Username", user.UserName);
+                command.Parameters.AddWithValue("@Email", user.Email);
                 command.Parameters.AddWithValue("@Password", user.Password);
                 conn.Open();
                 object userID = command.ExecuteScalar();
@@ -124,6 +125,42 @@ namespace RocketLeagueWars.Logic
                 command.Parameters.AddWithValue("@UserID", userID);
                 conn.Open();
                 result = Convert.ToInt32(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return result;
+        }
+        public static bool DoesUsernameExist(string username)
+        {
+            bool result = false;
+            string sql = @"select count(UserID)
+                            from Users
+                            where Username = @Username";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@Username", username);
+                conn.Open();
+                result = Convert.ToInt32(command.ExecuteScalar()) > 0;
+                conn.Close();
+            }
+
+            return result;
+        }
+        public static bool DoesEmailExist(string email)
+        {
+            bool result = false;
+            string sql = @"select count(UserID)
+                            from Users
+                            where Email = @Email";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@Email", email);
+                conn.Open();
+                result = Convert.ToInt32(command.ExecuteScalar()) > 0;
                 conn.Close();
             }
 
