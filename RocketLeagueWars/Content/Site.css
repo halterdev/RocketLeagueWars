@@ -139,3 +139,11 @@ body
     {
         color: green;
     }
+
+.fieldset
+{
+    margin-left: auto; 
+    margin-right: auto; 
+    width: 60%; 
+    margin-top: 5%;
+}

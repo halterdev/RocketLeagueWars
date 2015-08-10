@@ -4,17 +4,14 @@
     ViewBag.Title = "Log in";
 }
 
-<hgroup class="title">
-    <h1 style="font-family: Arial; color: #3498db;">@ViewBag.Title</h1>
-</hgroup>
 
 <section id="loginForm">
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
 
-    <fieldset>
-        <legend style="font-family: Arial, 'DejaVu Sans', 'Liberation Sans', Freesans, sans-serif; color: coral">Log in Form</legend>
+    <fieldset class="fieldset">
+        <legend class="legend">Log in Form</legend>
         <table>
             <tr>
                 <td>
@@ -35,17 +32,19 @@
                 </td>
             </tr>
             <tr>
+                <td>
+                    <input type="submit" value="Log in" />
+                </td>
+            </tr>
+            <tr>
                 <td colspan="2">
-                    @Html.CheckBoxFor(m => m.RememberMe)
-                    @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
+                    @Html.ActionLink("Register", "Register") if you don't have an account.
                 </td>
             </tr>
         </table>
-
-        <input type="submit" value="Log in" />
     </fieldset>
     <p>
-        @Html.ActionLink("Register", "Register") if you don't have an account.
+        
     </p>
 }
 </section>
