@@ -55,7 +55,7 @@ namespace RocketLeagueWars.Controllers
         // POST: /Account/LogOff
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public ActionResult LogOff()
         {
             Session.Abandon();
