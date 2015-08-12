@@ -37,6 +37,13 @@
                                          })" id="myteambtn">MY TEAM</a>
                             @Html.ActionLink("SUBMIT WIN", "Submit", "Game", null, new { id = "submitgamebtn" } )
                     }
+                    else
+                    {
+                        if (Session["Username"] != null)
+                        {
+                            <div style="display: inline; float: right; color: red">NO TEAM ASSIGNED YET. CHECK EMAIL</div>
+                        }
+                    }
                 </div>
             </div>
         </header>
