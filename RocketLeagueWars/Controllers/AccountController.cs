@@ -42,6 +42,7 @@ namespace RocketLeagueWars.Controllers
                 {
                     Session["Username"] = model.UserName;
                     Session["TeamID"] = AccountLogic.GetTeamID(userID);
+                    Session["IsAdmin"] = AccountLogic.GetIsAdmin(userID);
                     return RedirectToLocal(returnUrl);
                 }
             }

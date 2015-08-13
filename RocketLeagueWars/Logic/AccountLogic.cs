@@ -137,6 +137,24 @@ namespace RocketLeagueWars.Logic
 
             return result;
         }
+        public static bool GetIsAdmin(int userID)
+        {
+            bool result = false;
+            string sql = @"select IsAdmin
+                            from Users
+                            where UserID = @UserID";
+
+            using (SqlConnection conn = new SqlConnection(Main.GetDSN()))
+            {
+                SqlCommand command = new SqlCommand(sql, conn);
+                command.Parameters.AddWithValue("@UserID", userID);
+                conn.Open();
+                result = Convert.ToBoolean(command.ExecuteScalar());
+                conn.Close();
+            }
+
+            return result;
+        }
         public static bool DoesUsernameExist(string username)
         {
             bool result = false;

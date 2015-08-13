@@ -28,7 +28,12 @@
                     @Html.ActionLink("LEAGUES", "Index", "League")
                     @Html.ActionLink("RULES", "Rules", "Home")
                     <a href="~/forum">FORUM</a>
-                    @if (Session["TeamID"] != null && Session["TeamID"].ToString() != "0") { 
+                    @if (Session["IsAdmin"] != null && Convert.ToBoolean(Session["IsAdmin"]))
+                    {
+                        @Html.ActionLink("ADMIN", "Index", "Admin")
+                    }
+                    @if (Session["TeamID"] != null && Session["TeamID"].ToString() != "0") 
+                    { 
                             <a href="@Url.Action("MyTeam", 
                                      new 
                                          { 
