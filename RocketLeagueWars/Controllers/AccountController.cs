@@ -87,6 +87,7 @@ namespace RocketLeagueWars.Controllers
                     int userID = AccountLogic.Register(model);
                     if (userID > 0)
                     {
+                        EmailLogic.SendNewRegistrationEmail(model);
                         Session["Username"] = model.UserName;
                         return RedirectToAction("Index", "Home");
                     }

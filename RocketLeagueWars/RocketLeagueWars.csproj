@@ -191,6 +191,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Logic\AccountLogic.cs" />
+    <Compile Include="Logic\EmailLogic.cs" />
     <Compile Include="Logic\GameLogic.cs" />
     <Compile Include="Logic\LeagueLogic.cs" />
     <Compile Include="Logic\Main.cs" />
@@ -279,6 +280,7 @@
     </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
+      <SubType>Designer</SubType>
     </Content>
     <Content Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
